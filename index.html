@@ -3,46 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RJ35</title>
+  <title>RJ35 – UI Clone (Final)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#f7f8fa;
-      --panel:#ffffff;
-      --panel-2:#ffffff;
-      --muted:#718096;
-      --text:#2d3748;
-      --brand:#f97316; /* Orange */
-      --accent:#fb923c; /* Lighter Orange */
-      --success:#3ddc97;
-      --shadow:0 10px 25px rgba(0,0,0,.1);
-      --radius:16px;
+      /* New Purple & Orange Palette */
+      --bg: #1a0526;
+      --panel: #2b0d3a;
+      --panel-2: #2b0d3a;
+      --highlight: #3c124e;
+      --text: #ffffff;
+      --muted: #b5b5b5;
+      --brand: #f97316;
+      --accent: #ffb347;
+      --red: #e60023;
+      --green: #25d366;
+      
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius: 12px;
     }
     *{box-sizing:border-box}
-    * {
-  scrollbar-width: thin;
-  scrollbar-color: #FFA500 #ffffff; /* orange thumb, dark track */
-}
-
-*::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: #ffffff; /* dark track */
-}
-
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #FFA500, #fff); /* orange to white */
-  border-radius: 10px;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #FFB733, #f2f2f2); /* brighter hover */
-}
     html,body{height:100%}
     body{
       margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:var(--text);
@@ -54,22 +36,22 @@
     .app{display:grid; grid-template-columns: 260px 1fr; min-height:100vh}
     .sidebar{
       background:var(--panel-2);
-      border-right:1px solid #e2e8f0;
+      border-right:1px solid rgba(255,255,255,.1);
       position:sticky; top:0; height:100vh; overflow:auto; padding-bottom:24px;
       transition: transform .3s ease;
     }
     .sidebar::-webkit-scrollbar { width: 4px; }
-    .sidebar::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-    .brand{display:flex; align-items:center; gap:10px; padding:18px 18px; position:sticky; top:0; background:var(--panel-2); z-index:5; border-bottom:1px solid #e2e8f0}
+    .sidebar::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+    .brand{display:flex; align-items:center; gap:10px; padding:18px 18px; position:sticky; top:0; background:var(--panel-2); z-index:5; border-bottom:1px solid rgba(255,255,255,.1)}
     .brand svg{width:32px; height:32px; flex-shrink: 0;}
     .brand b{font-size:18px; letter-spacing:.5px; white-space: nowrap;}
     .sb-section{padding:10px 14px;}
-    .sb-title{font-size:12px; color:#a0aec0; text-transform:uppercase; letter-spacing:.12em; margin:8px 10px}
-    .sb-item{display:flex; align-items:center; gap:12px; padding:12px 12px; border-radius:12px; cursor:pointer; color:#4a5568; transition:.2s;
+    .sb-title{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; margin:8px 10px}
+    .sb-item{display:flex; align-items:center; gap:12px; padding:12px 12px; border-radius:12px; cursor:pointer; color:var(--text); transition:.2s;
       border:1px solid transparent; position: relative;}
-    .sb-item:hover{background:#f7fafc; border-color:#e2e8f0}
-    .sb-item.active{background:linear-gradient(90deg, rgba(249,115,22,.1), transparent); border-color:rgba(249,115,22,.3); color: var(--brand);}
-    .sb-item .tag{margin-left:auto; background:#edf2f7; padding:3px 8px; border-radius:999px; font-size:12px; color:#4a5568; border:1px solid #e2e8f0}
+    .sb-item:hover{background:var(--highlight);}
+    .sb-item.active{background:linear-gradient(90deg, rgba(249,115,22,.2), transparent); border-color:rgba(249,115,22,.4); color: var(--brand);}
+    .sb-item .tag{margin-left:auto; background:var(--bg); padding:3px 8px; border-radius:999px; font-size:12px; color:var(--muted); border:1px solid rgba(255,255,255,.1)}
     
     /* ====== SIDEBAR DROPDOWN ====== */
     .sb-dropdown-arrow {
@@ -99,23 +81,23 @@
         font-size: 10px;
         color: var(--muted);
     }
-    .sb-submenu-item:hover { background: #f7fafc; color: var(--text); }
+    .sb-submenu-item:hover { background: var(--highlight); color: var(--text); }
     
     .main{display:flex; flex-direction:column; min-width:0;}
     .topbar{
       position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:14px;
       padding:12px 16px; 
-      background:rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px); border-bottom:1px solid #e2e8f0;
+      background:rgba(43, 13, 58, 0.85);
+      backdrop-filter: blur(10px); border-bottom:1px solid rgba(255,255,255,.1);
     }
     .hamburger { display: none; }
     .tabs{display:flex; gap:10px; overflow:auto hidden; padding:4px}
     .tabs::-webkit-scrollbar { display: none; }
     .tabs { -ms-overflow-style: none; scrollbar-width: none; }
-    .tab{display:flex; align-items:center; gap:10px; padding:10px 14px; background:#edf2f7; border:1px solid #e2e8f0; border-radius:999px; white-space:nowrap; box-shadow:none; cursor:pointer;}
-    .tab.active{background:linear-gradient(90deg, rgba(249,115,22,.15),rgba(249,115,22,0)); border-color:rgba(249,115,22,.5); color: var(--brand);}
+    .tab{display:flex; align-items:center; gap:10px; padding:10px 14px; background:var(--bg); border:1px solid rgba(255,255,255,.1); border-radius:999px; white-space:nowrap; box-shadow:none; cursor:pointer;}
+    .tab.active{background:linear-gradient(90deg, rgba(249,115,22,.25),rgba(249,115,22,0)); border-color:rgba(249,115,22,.5); color: var(--brand);}
     .grow{flex:1}
-    .btn{display:inline-flex; align-items:center; justify-content: center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; color:var(--text); cursor:pointer; font-family: inherit; font-size: 14px;}
+    .btn{display:inline-flex; align-items:center; justify-content: center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.2); background:var(--panel); color:var(--text); cursor:pointer; font-family: inherit; font-size: 14px;}
     .btn.primary{background:linear-gradient(180deg, var(--accent), var(--brand)); border-color:transparent; color:#fff; font-weight:700}
     
     /* LANGUAGE DROPDOWN */
@@ -124,8 +106,8 @@
         position: absolute;
         top: calc(100% + 8px);
         right: 0;
-        background: var(--panel);
-        border: 1px solid #e2e8f0;
+        background: var(--highlight);
+        border: 1px solid rgba(255,255,255,0.1);
         border-radius: 12px;
         padding: 6px;
         z-index: 30;
@@ -140,11 +122,11 @@
         color: var(--text);
         text-decoration: none;
     }
-    .lang-dropdown a:hover { background-color: #f7fafc; }
+    .lang-dropdown a:hover { background-color: var(--panel); }
 
     /* HERO BANNER / CAROUSEL */
     .hero { padding: 20px 18px 0; }
-    .carousel { position: relative; border-radius: 18px; overflow: hidden; background: #e2e8f0; }
+    .carousel { position: relative; border-radius: 18px; overflow: hidden; background: #0c1016; }
     .slides { display: flex; transition: transform 0.6s ease; }
     .slide {
       min-width: 100%; height: 300px;
@@ -154,8 +136,8 @@
       position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
       display: flex; flex-direction: column; gap: 8px;
     }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; transition: .3s; }
-    .dot.active { background: #333; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: .3s; }
+    .dot.active { background: var(--brand); }
 
     /* CONTENT SECTIONS */
     .section { padding: 24px 18px; }
@@ -170,15 +152,15 @@
     .carousel-nav { display: flex; gap: 8px; }
     .carousel-btn {
       width: 32px; height: 32px; border-radius: 50%;
-      background: #fff; border: 1px solid #FFA500;
-      color: #FFA500; cursor: pointer; display: grid; place-items: center;
+      background: var(--panel); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text); cursor: pointer; display: grid; place-items: center;
     }
-    .live-indicator { font-size: 12px; color: var(--success); font-weight: 400; }
+    .live-indicator { font-size: 12px; color: var(--red); font-weight: 400; }
     .live-indicator::before {
-        content: '•'; color: var(--success); font-size: 24px; margin-right: 4px;
-        animation: pulse 1.5s infinite;
+        content: '•'; color: var(--red); font-size: 24px; margin-right: 4px;
+        animation: pulse-red 1.5s infinite;
     }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     
     .scroll-grid {
       display: flex; gap: 14px; overflow-x: auto; padding-bottom: 16px;
@@ -197,7 +179,7 @@
     }
     .card .thumb {
       aspect-ratio: 1/1;
-      background-color: #e2e8f0;
+      background-color: #1a0526;
       background-size: cover;
       background-position: center;
       border-radius: var(--radius);
@@ -206,27 +188,93 @@
     }
     .card:hover .thumb {
         transform: translateY(-5px);
-        box-shadow: 0 14px 30px rgba(0,0,0,.15);
+        box-shadow: 0 14px 30px rgba(0,0,0,.45);
     }
     .card .card-body { text-align: center; }
     .card .card-title { font-weight: 600; font-size: 14px; color: var(--text); }
     .card .card-subtitle { font-size: 12px; color: var(--muted); text-transform: uppercase; }
     
+    /* POPULAR GAMES SECTION */
+    .popular-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
+    .card-wide {
+        background: var(--panel);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: transform .2s ease, box-shadow .2s ease;
+        cursor: pointer;
+    }
+    .card-wide:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 30px rgba(0,0,0,.45);
+    }
+    .card-wide .thumb {
+        aspect-ratio: 16/10;
+        background-size: cover;
+        background-position: center;
+    }
+    .card-wide .card-body {
+        padding: 12px;
+        text-align: left;
+    }
+
     /* LIVE NOW CARDS */
     .live-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:14px}
-    .live-card{background:var(--); border:1px solid var(--brand); border-radius:var(--radius); padding:14px; box-shadow: 0 4px 20px rgba(250, 204, 21, 0.25)}
+    .live-card{background:var(--panel); border:1px solid var(--highlight); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
     .live-head{display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap: wrap;}
     .odds{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-    .odd{display:flex; align-items:center; justify-content:space-between; gap:10px; background:#f7fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:12px; color:var(--text)}
+    .odd{display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bg); border:1px solid var(--highlight); padding:8px 10px; border-radius:12px; color:var(--text)}
     .odd-input { width:70px; background:transparent; border:none; color:var(--text); text-align:right; font-family: inherit; font-size: 14px; }
-    .chip{padding:4px 8px; background:#f7fafc; border:1px solid #e2e8f0; border-radius:999px; font-size:12px; color:#4a5568; white-space: nowrap;}
+    .chip{padding:4px 8px; background:var(--bg); border:1px solid var(--highlight); border-radius:999px; font-size:12px; color:var(--muted); white-space: nowrap;}
+
+    /* FAQ ACCORDION */
+    .faq-section {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .faq-item {
+        background: var(--panel);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        border: 1px solid var(--highlight);
+    }
+    .faq-question {
+        padding: 16px 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+    }
+    .faq-question::after {
+        content: '+';
+        font-size: 24px;
+        transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question::after {
+        transform: rotate(45deg);
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+        padding: 0 20px;
+        line-height: 1.6;
+    }
+    .faq-answer p {
+        margin: 0;
+        padding-bottom: 20px;
+    }
 
     /* FOOTER */
     .footer {
-        background: #fff;
+        background: var(--panel);
         font-size: 13px;
         color: var(--muted);
-        border-top: 1px solid #e2e8f0;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
     .footer-top {
         padding: 24px 18px;
@@ -235,9 +283,9 @@
         line-height: 1.6;
     }
     .footer-middle {
-        background: #f7fafc;
+        background: var(--bg);
         padding: 32px 18px;
-        border-top: 1px solid #e2e8f0;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
     .footer-middle-content {
         display: grid;
@@ -265,7 +313,7 @@
     .footer-links a:hover { color: var(--brand); }
     .footer-bottom {
         padding: 24px 18px;
-        border-top: 1px solid #e2e8f0;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
     .footer-bottom-content {
         display: flex;
@@ -280,7 +328,7 @@
     .modal-overlay {
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.7);
         backdrop-filter: blur(5px);
         z-index: 100;
         display: flex;
@@ -304,7 +352,7 @@
         overflow: hidden;
         transform: scale(0.95);
         transition: transform .3s;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--highlight);
     }
     .modal-overlay.visible .modal-content {
         transform: scale(1);
@@ -318,8 +366,8 @@
     }
     .modal-close {
         position: absolute; top: 10px; right: 10px;
-        background: rgba(0,0,0,0.05); border: none;
-        color: var(--muted);
+        background: rgba(255,255,255,0.1); border: none;
+        color: var(--text);
         width: 30px; height: 30px; border-radius: 50%;
         font-size: 16px; cursor: pointer;
         display: grid; place-items: center;
@@ -331,21 +379,21 @@
     .form-group input {
         width: 100%;
         padding: 12px;
-        background: #f7fafc;
-        border: 1px solid #e2e8f0;
+        background: var(--bg);
+        border: 1px solid var(--highlight);
         border-radius: 10px;
         color: var(--text);
         font-size: 14px;
     }
     .form-group .btn { width: 100%; padding: 12px; font-weight: 600; }
-    .form-group .btn.secondary { background: transparent; border-color: #e2e8f0; color: var(--text); }
+    .form-group .btn.secondary { background: transparent; border-color: var(--highlight); }
     .modal-footer { margin-top: 20px; text-align: center; font-size: 13px; }
     .modal-footer a { color: var(--brand); text-decoration: none; font-weight: 600; cursor: pointer; }
 
     /* FLOATING BUTTONS */
     .floating{position:fixed; right:16px; bottom:18px; z-index:50; display:flex; flex-direction:column; gap:10px}
     .fab{width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(180deg, var(--accent), var(--brand)); color:#fff; font-weight:900; border:none; cursor:pointer; box-shadow:0 12px 25px rgba(249,115,22,.35); font-size: 24px;}
-    .fab.whatsapp{background:linear-gradient(180deg,#35e06f,#20b957); color:#fff; box-shadow:0 12px 25px rgba(53,224,111,.35)}
+    .fab.whatsapp{background:var(--green); color:#fff; box-shadow:0 12px 25px rgba(37,211,102,.35)}
 
     /* MOBILE OVERLAY */
     .mobile-overlay {
@@ -368,7 +416,7 @@
           width: 260px;
           transform: translateX(-100%);
           z-index: 99;
-          border-right: 1px solid rgba(0,0,0,0.1);
+          border-right: 1px solid rgba(255,255,255,0.1);
       }
       body.sidebar-open .sidebar {
           transform: translateX(0);
@@ -498,11 +546,27 @@
       <!-- Game Categories will be injected here by JS -->
       <div id="game-categories"></div>
 
+      <!-- Popular Games Section -->
+      <section class="section" id="popular-games-section">
+          <div class="section-header">
+              <h3>POPULAR GAMES</h3>
+              <button class="btn primary">EVOLUTION</button>
+          </div>
+          <div class="popular-grid" id="popularGrid"></div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="section">
+          <div class="faq-section" id="faq-accordion">
+              <!-- FAQ items will be injected by JS -->
+          </div>
+      </section>
+
       <!-- Footer -->
       <footer class="footer">
         <div class="footer-top">
-            <p>Winzoric is operated by Winzoric Info N.V. a limited liability company incorporated under the laws of Curacao with company Registration number 25678905 is licensed and regulated by the Curacao authority as the regulatory body responsible holding.</p>
-            <p>Players are requested not to contact any untrusted sources for Winzoric.com accounts as this is an online site and they can only register independently without any agents. Only deposit through the account details generated by the system or provided by our official support team.</p>
+            <p>RJ35 is operated by RJ35 Info N.V. a limited liability company incorporated under the laws of Curacao with company Registration number 25678905 is licensed and regulated by the Curacao authority as the regulatory body responsible holding.</p>
+            <p>Players are requested not to contact any untrusted sources for RJ35.com accounts as this is an online site and they can only register independently without any agents. Only deposit through the account details generated by the system or provided by our official support team.</p>
         </div>
         <div class="footer-middle">
             <div class="footer-middle-content">
@@ -529,7 +593,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <span>Gambling can be addictive. Please play responsibly.</span>
-                <span>Copyright © 2019 Winzoric. All rights reserved.</span>
+                <span>Copyright © 2019 RJ35. All rights reserved.</span>
             </div>
         </div>
       </footer>
@@ -555,11 +619,11 @@
   <script>
     // ====== SVG ICON LIBRARY ======
     const svgLib={
-      brand: `<svg viewBox="0 0 24 24" fill="none" stroke="url(#g-orange)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g-orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fb923c"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><path d="M3 12h6l3-9 3 18 3-9h3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      brand: `<svg viewBox="0 0 24 24" fill="none" stroke="url(#g-orange)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g-orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb347"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><path d="M3 12h6l3-9 3 18 3-9h3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
       arrow: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`,
       menu: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`,
       home:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
-      live:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 20 0"/><path d="M5 12a7 7 0 1 1 14 0"/><circle cx="12" cy="12" r="2" fill="#3ddc97" stroke="none"/></svg>`,
+      live:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e60023" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 20 0"/><path d="M5 12a7 7 0 1 1 14 0"/><circle cx="12" cy="12" r="2" fill="#e60023" stroke="none"/></svg>`,
       book:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v-14H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5v-14"/></svg>`,
       dice:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M8 8h.01"/><path d="M16 16h.01"/><path d="M12 12h.01"/><path d="M8 16h.01"/><path d="M16 8h.01"/></svg>`,
       chip:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="m12 19-3-5.17"/><path d="m12 5 3 5.17"/><path d="m5 12 5.17 3"/><path d="m19 12-5.17-3"/></svg>`,
@@ -571,7 +635,7 @@
       cricket:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="22" x2="12" y2="16"/><line x1="8" y1="16" x2="16" y2="16"/><circle cx="12" cy="10" r="3"/><path d="M12 10V3l-3.3 3.3"/><path d="M12 3l3.3 3.3"/></svg>`,
       soccer:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></svg>`,
       tennis:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m19 19-4-4"/><path d="M10 10c-2-2-4-2-6 0"/></svg>`,
-      bell:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/></svg>`,
+      bell:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/></svg>`,
       pin:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
     };
     function icon(name) { return svgLib[name] || ''; }
@@ -596,62 +660,38 @@
         'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/308136.png'
     ];
     const trendingGames = [
-    {
-        title: 'Super Sic Bo',
-        subtitle: 'Jili',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/386.png'
-    },
-    {
-        title: 'Chicken Road',
-        subtitle: 'Evoplay',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/139.png'
-    },
-    {
-        title: 'AE Sexy',
-        subtitle: 'Live',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/ae_sexy_MX-LIVE-009'
-    },
-    {
-        title: 'Lucky 7',
-        subtitle: 'Casino',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/83.png'
-    },
-    {
-        title: 'Dream Catcher',
-        subtitle: 'Evolution',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/evolution3_evo_livedreamcatcher'
-    },
-    {
-        title: 'Live Baccarat',
-        subtitle: 'Brino',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/308136.png'
-    },
-    {
-        title: 'Super Sic Bo II',
-        subtitle: 'Jili',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/386.png'
-    },
-    {
-        title: 'Chicken Road 2',
-        subtitle: 'Evoplay',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/139.png'
-    },
-    {
-        title: 'AE Sexy Baccarat',
-        subtitle: 'Live',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/ae_sexy_MX-LIVE-009'
-    },
-    {
-        title: 'Lucky 7 Deluxe',
-        subtitle: 'Casino',
-        img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/83.png'
-    }
-];
+        { title: 'Super Sic Bo', subtitle: 'Jili', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/386.png' }, 
+        { title: 'Chicken Road', subtitle: 'Evoplay', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/139.png' },
+        { title: 'AE Sexy', subtitle: 'Live', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/ae_sexy_MX-LIVE-009' }, 
+        { title: 'Lucky 7', subtitle: '', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/83.png' },
+        { title: 'Dream Catcher', subtitle: 'Evolution', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/evolution3_evo_livedreamcatcher' }, 
+        { title: 'Live Baccarat', subtitle: 'Brino', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/308136.png' },
+        { title: 'Super Sic Bo II', subtitle: 'Jili', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/386.png' }, 
+        { title: 'Chicken Road 2', subtitle: 'Evoplay', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/139.png' },
+        { title: 'AE Sexy Baccarat', subtitle: 'Live', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/livecasino/ae_sexy_MX-LIVE-009' }, 
+        { title: 'Lucky 7 Deluxe', subtitle: 'Casino', img: 'https://s3.ap-south-1.amazonaws.com/assets.iceexchange.com/prod/dashboard/tranding/83.png' }
+    ];
     
     const gameData = [
         { category: "Rummy Games", games: Array.from({length: 10}, (_, i) => ({ title: `Classic Rummy ${i+1}`, subtitle: 'Rummy', img: cardImages[i % cardImages.length] })) },
         { category: "Card Classics", games: Array.from({length: 10}, (_, i) => ({ title: `Poker Night ${i+1}`, subtitle: 'Casino', img: cardImages[(i+2) % cardImages.length] })) },
         { category: "Casino Favorites", games: Array.from({length: 10}, (_, i) => ({ title: `Blackjack Live ${i+1}`, subtitle: 'Live', img: cardImages[(i+4) % cardImages.length] })) },
+    ];
+
+    const popularGames = [
+        { title: 'Live Teen Patti', subtitle: 'Vivo', img: cardImages[0] }, { title: 'French Roulette', subtitle: 'Vivo', img: cardImages[1] },
+        { title: 'Galaxy Roulette', subtitle: 'Vivo', img: cardImages[2] }, { title: 'Macau Baccarat', subtitle: 'Vivo', img: cardImages[3] },
+        { title: 'Speed Roulette', subtitle: 'Evolution', img: cardImages[4] }, { title: 'Lightning Roulette', subtitle: 'Evolution', img: cardImages[5] },
+        { title: 'Marina Casino Roulette', subtitle: 'Ezugi', img: cardImages[0] }, { title: 'Baccarat', subtitle: 'Ezugi', img: cardImages[1] },
+        { title: 'Speed Baccarat R', subtitle: 'Evolution', img: cardImages[2] }, { title: 'Lightning Baccarat', subtitle: 'Evolution', img: cardImages[3] },
+        { title: 'VIP Blackjack', subtitle: 'Ezugi', img: cardImages[4] }, { title: 'Infinite Blackjack', subtitle: 'Ezugi', img: cardImages[5] },
+    ];
+
+    const faqData = [
+        { q: "RJ35: Trusted Gaming and Sports Exchange Platform ?", a: "Yes, RJ35 is a trusted platform with a valid Curacao license, ensuring a safe and fair gaming experience." },
+        { q: "Why Choose RJ35?", a: "We offer a wide variety of games, competitive odds, fast payouts, and 24/7 customer support." },
+        { q: "Various Games on RJ35", a: "Explore a vast collection of games including slots, live casino, table games, sports betting, and more from top providers." },
+        { q: "Signup: A Simple Guide", a: "Click the 'SIGNUP' button, fill in your details, and you'll be ready to play in minutes." },
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -780,8 +820,24 @@
                     </div>
                 </div>`).join('');
         }
+
+        function populatePopularGrid() {
+            const container = document.getElementById('popularGrid');
+            if (!container) return;
+            container.innerHTML = popularGames.map(game => `
+                <div class="card-wide">
+                    <div class="thumb" style="background-image: url('${game.img}')"></div>
+                    <div class="card-body">
+                        <div class="card-title">${game.title}</div>
+                        <div class="card-subtitle">${game.subtitle}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
         
         populateGrid('trendingGrid', trendingGames);
+        populatePopularGrid();
+        
         const gameCategoriesContainer = document.getElementById('game-categories');
         gameCategoriesContainer.innerHTML = gameData.map(cat => `
             <section class="section">
@@ -803,6 +859,14 @@
                         </div>`).join('')}
                 </div>
             </section>`).join('');
+        
+        const faqContainer = document.getElementById('faq-accordion');
+        faqContainer.innerHTML = faqData.map(item => `
+            <div class="faq-item">
+                <div class="faq-question">${item.q}</div>
+                <div class="faq-answer"><p>${item.a}</p></div>
+            </div>
+        `).join('');
 
         // ====== GENERAL INTERACTIVITY ======
         document.querySelectorAll('.carousel-btn').forEach(btn => {
@@ -811,6 +875,20 @@
                 const scrollAmount = targetGrid.clientWidth * 0.8;
                 targetGrid.scrollLeft += scrollAmount * parseInt(btn.dataset.dir);
             });
+        });
+
+        faqContainer.addEventListener('click', e => {
+            const question = e.target.closest('.faq-question');
+            if (question) {
+                const item = question.parentElement;
+                item.classList.toggle('open');
+                const answer = item.querySelector('.faq-answer');
+                if (item.classList.contains('open')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                } else {
+                    answer.style.maxHeight = null;
+                }
+            }
         });
 
         const sidebar = document.getElementById('sidebar');
